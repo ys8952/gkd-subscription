@@ -1,5 +1,5 @@
 {
-  "name": "@gkd-kit/subscription-template",
+  "name": "hongguo-gkd-subscription",
   "version": "0.0.0",
   "type": "module",
   "scripts": {
@@ -8,11 +8,13 @@
     "lint": "eslint --cache --fix .",
     "check": "tsc --noEmit && tsx ./scripts/check.ts",
     "build": "tsc --noEmit && tsx ./scripts/build.ts",
-    "verify": "tsc --noEmit && tsx ./scripts/verify-ad-text.ts"
+    "verify": "tsc --noEmit && tsx ./scripts/verify-ad-text.ts",
+    "verify:published": "tsx ./scripts/verify-published.ts",
+    "export": "tsx ./scripts/export-phone-file.ts"
   },
   "simple-git-hooks": {
-    "pre-commit": "pnpm exec lint-staged",
-    "pre-push": "pnpm run check"
+    "pre-commit": "NODE_OPTIONS=--experimental-strip-types npx --yes pnpm@11.20.0 exec lint-staged",
+    "pre-push": "npx --yes pnpm@11.20.0 run check"
   },
   "lint-staged": {
     "*.{js,cjs,mjs,ts,jsx,tsx}": [
@@ -22,13 +24,6 @@
       "prettier --cache --write"
     ]
   },
-  "publishConfig": {
-    "access": "public",
-    "registry": "https://registry.npmjs.org/"
-  },
-  "files": [
-    "./dist"
-  ],
   "dependencies": {
     "@eslint/js": "10.0.1",
     "@gkd-kit/api": "0.9.3",
@@ -47,18 +42,6 @@
     "tsx": "4.23.5",
     "typescript": "6.0.3",
     "typescript-eslint": "8.66.0"
-  },
-  "devEngines": {
-    "runtime": {
-      "name": "node",
-      "version": "26",
-      "onFail": "warn"
-    },
-    "packageManager": {
-      "name": "pnpm",
-      "version": "11.20.0",
-      "onFail": "warn"
-    }
   },
   "devDependencies": {
     "@gkd-kit/selector": "0.6.1",
